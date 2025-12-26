@@ -1,165 +1,118 @@
-# AutoAppraiser Project Structure
+# 🎮 AutoAppraiser
 
-## Overview
-The AutoAppraiser project has been refactored into a modular, maintainable structure that is compatible with PyInstaller for building standalone executables.
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![OS](https://img.shields.io/badge/Platform-Windows-0078D4?logo=windows&logoColor=white)](https://www.microsoft.com/windows)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-## Directory Structure
+**AutoAppraiser** is a high-performance automation tool designed for **Fisch (Roblox)**. It utilizes advanced OCR techniques and fast screen capture to automate the appraisal process, allowing you to filter for specific fish mutations with extreme precision and speed.
 
-```
-autoappraiser_src/
-├── autoappraiser/
-│   ├── __init__.py
-│   ├── __main__.py              # Entry point
-│   ├── auto_appraiser.py        # Main application class
-│   │
-│   ├── core/                    # Core UI components
-│   │   ├── __init__.py
-│   │   └── capture_box.py       # Capture overlay window
-│   │
-│   └── utils/                   # Utility modules
-│       ├── __init__.py          # Utils aggregator
-│       ├── actions.py           # Game automation actions
-│       ├── camera.py            # Screen capture
-│       ├── config.py            # Configuration management
-│       ├── hotkeys.py           # Keyboard shortcuts
-│       ├── misc.py              # Helper functions
-│       ├── mutations.py         # Mutation list management
-│       └── ocr_handler.py       # OCR functionality
-│
-├── res/                         # Resources
-│   └── icon.ico
-│
-├── config.toml                  # User configuration
-├── autoappraiser.spec           # PyInstaller spec file
-└── README.md                    # This file
-```
+---
 
-## Module Responsibilities
+## ✨ Key Features
 
-### Main Application (`auto_appraiser.py`)
-- GUI creation and layout
-- Widget initialization
-- Event binding
-- Application lifecycle management
-- Inherits functionality from all utility modules
+-   ⚡ **Turbo Capture**: Supports both `DXCAM` (NVIDIA/AMD) and `MSS` for near-instant screen recognition.
+-   👁️ **Windows Runtime OCR**: Leverages native Windows OCR for high-accuracy text detection without external dependencies like Tesseract.
+-   🎯 **Overlay Region Selector**: A transparent, draggable, and resizable overlay to precisely define your capture area.
+-   🧬 **Mutation Filtering**: fully customizable list of mutations to keep—stop automatically when you find that "Abyssal" or "Celestial" fish!
+-   ⌨️ **Global Hotkeys**: Control the application (Toggle Overlay, Start/Stop, Force Exit) from anywhere using customizable keys.
+-   🏗️ **Modular Architecture**: Clean, maintainable codebase designed for easy extension and updates.
 
-### Core Modules
+---
 
-#### `core/capture_box.py`
-- Transparent overlay window
-- Drag and resize functionality
-- Visual feedback for capture area
-
-### Utility Modules
-
-#### `utils/config.py`
-- Configuration loading/saving (TOML format)
-- Default configuration management
-- Resource path resolution (PyInstaller compatible)
-- Settings persistence
-
-#### `utils/camera.py`
-- Screen capture using DXCAM or MSS
-- Camera mode switching
-- Region-based capture
-- Frame format conversion
-
-#### `utils/ocr_handler.py`
-- Windows Runtime OCR initialization
-- Frame recognition (async)
-- Image format conversion for OCR
-
-#### `utils/hotkeys.py`
-- Keyboard shortcut registration
-- Hotkey management
-- Event generation for shortcuts
-
-#### `utils/mutations.py`
-- Mutation list UI management
-- Mutation editor dialog
-- List persistence
-
-#### `utils/actions.py`
-- Game automation sequences
-- Totem placement logic
-- Fish appraisal automation
-- Mouse movement and clicking
-
-#### `utils/misc.py`
-- Smooth mouse movement
-- Capture preview dialog
-- Mutation selection helpers
-- General utility functions
-
-## Building with PyInstaller
+## 🚀 Getting Started
 
 ### Prerequisites
+
+-   **Windows 10/11** (Required for Windows Runtime OCR)
+-   **Python 3.10 or higher**
+
+### Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/yourusername/autoappraiser.git
+    cd autoappraiser
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+### Running the App
+
+Execute the main module:
 ```bash
-pip install pyinstaller
+python -m autoappraiser
 ```
 
-### Build Command
-```bash
-pyinstaller autoappraiser.spec
+---
+
+## 🛠️ Usage Guide
+
+1.  **Configure Mutations**: Navigate to the "Mutations" tab and select the ones you want to keep. You can also edit the list manually.
+2.  **Set Capture Region**: Press `F3` (default) to show the capture box. Drag and resize it over the appraisal text area in-game. Press `F3` again to hide and save.
+3.  **Start Automating**: Equipt your fish and press `F4` to start the auto-appraisal loop. The app will automatically click the "Appraise" button and stop once a selected mutation is detected!
+4.  **Test Capture**: Press `F2` to take a snapshot and see exactly what the OCR engine is reading.
+
+---
+
+## 🏗️ Technical Documentation
+
+### Project Structure
+
+```text
+autoappraiser/
+├── core/                # Core UI components
+│   └── capture_box.py   # Draggable overlay window
+├── utils/               # Logic & Utility modules
+│   ├── actions.py       # Game automation / Mouse control
+│   ├── camera.py        # High-speed screen capture
+│   ├── config.py        # Settings & TOML management
+│   ├── hotkeys.py       # Shortcut registration
+│   ├── ocr_handler.py   # Windows WinRT OCR logic
+│   └── mutations.py     # Filter management
+└── auto_appraiser.py     # Main application & GUI (CustomTkinter)
 ```
-
-### Output
-The built application will be in `dist/AutoAppraiser/`
-
-## Key Features
-
-### PyInstaller Compatibility
-- Resource path resolution using `sys._MEIPASS`
-- All dependencies properly collected
-- Hidden imports specified in spec file
-- CustomTkinter assets bundled
 
 ### Modular Design
-- Single Responsibility Principle
-- Easy to test individual components
-- Clear separation of concerns
-- Maintainable codebase
+The project uses a **multiple inheritance pattern**. The `AutoAppraiser` class inherits from a `Utils` aggregator, which combines functionality from all utility modules. This keeps the main application lean while providing easy access to all features.
 
-### Multiple Inheritance Pattern
-The `AutoAppraiser` class inherits from `Utils`, which in turn inherits from all utility classes:
-```python
-class Utils(Config, Misc, OcrHandler, Hotkeys, Mutations, Camera, Actions):
-    pass
+---
 
-class AutoAppraiser(Utils):
-    # Main application logic
-```
+## 📦 Building Standalone Executable
 
-This allows the main class to access all utility methods while keeping the code organized.
+To create a single `.exe` file for distribution:
 
-## Configuration
+1.  **Install PyInstaller**:
+    ```bash
+    pip install pyinstaller
+    ```
 
-Configuration is stored in `config.toml` with the following sections:
+2.  **Build**:
+    ```bash
+    pyinstaller autoappraiser.spec
+    ```
+    The output will be located in `dist/AutoAppraiser/`.
 
-- `[ocr]` - Capture mode and region settings
-- `[gp]` - Gamepass settings (WIP)
-- `[appraise]` - Automation timing and slots
-- `[mutations]` - List of mutations to detect
-- `[hotkeys]` - Keyboard shortcuts
+---
 
-## Development
+## 🤝 Contributing
 
-### Adding New Features
-1. Identify the appropriate utility module (or create a new one)
-2. Add the functionality to that module as a class method
-3. If creating a new module, add it to `utils/__init__.py`
-4. The main application will automatically have access to the new methods
+Contributions are welcome! Whether it's fixing bugs, adding features, or improving documentation:
 
-### Testing
-Each utility module can be tested independently since they're separate classes.
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
 
-## Dependencies
+---
 
-- customtkinter - Modern UI framework
-- dxcam_cpp - Fast screen capture
-- mss - Cross-platform screen capture
-- keyboard - Keyboard event handling
-- pynput - Mouse control
-- winrt - Windows Runtime OCR
-- PIL - Image processing
-- tomlkit/tomllib - Configuration management
+## 📜 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+*Disclaimer: Use this tool responsibly. Automating gameplay may violate the terms of service of some platforms.*
+

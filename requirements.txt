@@ -1,0 +1,11 @@
+customtkinter
+dxcam_cpp
+mss
+keyboard
+pynput
+winrt-runtime
+winrt-Windows.Graphics.Imaging
+winrt-Windows.Media.Ocr
+winrt-Windows.Storage.Streams
+Pillow
+tomlkit
