@@ -28,10 +28,16 @@
 
 ### Installation
 
+#### Pre-built Executable
+
+Download the latest release from [Releases](https://github.com/Moon-Playground/fisch-autoappraiser/releases) and run the executable.
+
+#### From Source
+
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/yourusername/autoappraiser.git
-    cd autoappraiser
+    git clone https://github.com/Moon-Playground/fisch-autoappraiser.git
+    cd fisch-autoappraiser
     ```
 
 2.  **Install dependencies:**
@@ -50,10 +56,7 @@ python -m autoappraiser
 
 ## 🛠️ Usage Guide
 
-1.  **Configure Mutations**: Navigate to the "Mutations" tab and select the ones you want to keep. You can also edit the list manually.
-2.  **Set Capture Region**: Press `F3` (default) to show the capture box. Drag and resize it over the appraisal text area in-game. Press `F3` again to hide and save.
-3.  **Start Automating**: Equipt your fish and press `F4` to start the auto-appraisal loop. The app will automatically click the "Appraise" button and stop once a selected mutation is detected!
-4.  **Test Capture**: Press `F2` to take a snapshot and see exactly what the OCR engine is reading.
+See [USAGE.md](USAGE.md)
 
 ---
 
@@ -80,23 +83,6 @@ The project uses a **multiple inheritance pattern**. The `AutoAppraiser` class i
 
 ---
 
-## 📦 Building Standalone Executable
-
-To create a single `.exe` file for distribution:
-
-1.  **Install PyInstaller**:
-    ```bash
-    pip install pyinstaller
-    ```
-
-2.  **Build**:
-    ```bash
-    pyinstaller autoappraiser.spec
-    ```
-    The output will be located in `dist/AutoAppraiser/`.
-
----
-
 ## 🤝 Contributing
 
 Contributions are welcome! Whether it's fixing bugs, adding features, or improving documentation:
@@ -114,5 +100,3 @@ Contributions are welcome! Whether it's fixing bugs, adding features, or improvi
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
-*Disclaimer: Use this tool responsibly. Automating gameplay may violate the terms of service of some platforms.*
-

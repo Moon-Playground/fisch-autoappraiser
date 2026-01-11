@@ -364,7 +364,7 @@ class AutoAppraiser(Utils):
                         
                         found_match = True
                         break
-                        
+
                     if found_match:
                         continue
 
