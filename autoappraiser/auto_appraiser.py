@@ -22,6 +22,7 @@ import threading
 import time
 import winrt.windows.graphics.imaging as imaging
 import winrt.windows.storage.streams as streams
+import winrt.windows.foundation
 
 from PIL import Image
 from pynput.mouse import Controller

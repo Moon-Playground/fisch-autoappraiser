@@ -38,7 +38,8 @@ jobs:
                 enable-plugins: tk-inter
                 windows-icon-from-ico: 'autoappraiser/res/icon.ico'
                 windows-console-mode: 'disable'
-                include-data-dir: 'autoappraiser/res=res'
+                include-package: 'winrt'
+                include-data-dir: 'autoappraiser/res=autoappraiser/res'
                 output-file: 'AutoAppraiser.exe'
 
             - name: Create release

@@ -26,7 +26,8 @@ jobs:
           mode: 'onefile'
           enable-plugins: tk-inter
           windows-icon-from-ico: 'autoappraiser/res/icon.ico'
-          include-data-dir: 'autoappraiser/res=res'
+          include-package: 'winrt'
+          include-data-dir: 'autoappraiser/res=autoappraiser/res'
           output-file: 'AutoAppraiser.exe'
 
       - name: Upload artifact

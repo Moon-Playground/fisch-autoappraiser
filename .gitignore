@@ -8,3 +8,4 @@ pyarmor.*
 *.pyo
 *.pyd
 *.toml
+*.exe
