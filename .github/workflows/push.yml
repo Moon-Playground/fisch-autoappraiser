@@ -24,14 +24,16 @@ jobs:
           nuitka-version: 'main'
           script-name: 'autoappraiser'
           mode: 'onefile'
+          clang: 'on'
+          lto: 'yes'
           enable-plugins: tk-inter
           windows-icon-from-ico: 'autoappraiser/res/icon.ico'
           include-package: 'winrt'
           include-data-dir: 'autoappraiser/res=autoappraiser/res'
-          output-file: 'AutoAppraiser.exe'
+          output-file: 'AutoAppraiser-debug.exe'
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: AutoAppraiser
-          path: build/AutoAppraiser.exe
+          name: AutoAppraiser-debug
+          path: build/AutoAppraiser-debug.exe

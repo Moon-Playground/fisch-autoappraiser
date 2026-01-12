@@ -35,6 +35,8 @@ jobs:
                 nuitka-version: 'main'
                 script-name: 'autoappraiser'
                 mode: 'onefile'
+                clang: 'on'
+                lto: 'yes'
                 enable-plugins: tk-inter
                 windows-icon-from-ico: 'autoappraiser/res/icon.ico'
                 windows-console-mode: 'disable'
