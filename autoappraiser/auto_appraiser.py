@@ -328,7 +328,7 @@ class AutoAppraiser(Utils):
                 if self.use_gp: # TODO: implement gp appraise
                     #self.appraise_gp()
                     self.active.clear()
-                    break
+                    continue
                 else:
                     self.appraise_normal()
 
@@ -358,7 +358,7 @@ class AutoAppraiser(Utils):
                         self.root.after(0, lambda d=result: self.show_found_dialog(d))
                         
                         found_match = True
-                        break
+                        continue
 
                     if found_match:
                         continue
