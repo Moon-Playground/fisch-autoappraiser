@@ -23,7 +23,7 @@ build_exe_options = {
         "winrt.windows.graphics.imaging",
         "winrt.windows.storage.streams",
         "PIL",
-        "pynput",
+        "pydirectinput",
         "customtkinter"
     ],
     "include_files": [

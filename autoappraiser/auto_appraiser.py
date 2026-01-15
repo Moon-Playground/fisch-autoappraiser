@@ -25,7 +25,7 @@ import winrt.windows.storage.streams as streams
 import winrt.windows.foundation
 
 from PIL import Image
-from pynput.mouse import Controller
+import pydirectinput
 
 from autoappraiser.core.capture_box import CaptureBox
 from autoappraiser.utils import Utils
@@ -117,7 +117,6 @@ class AutoAppraiser(Utils):
         self.ocr_engine = self.init_ocr_engine()
 
         self.active = threading.Event()
-        self.mouse = Controller()
         self.mouse_position = None
 
         self.create_widgets()

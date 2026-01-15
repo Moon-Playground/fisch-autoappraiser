@@ -20,7 +20,7 @@ hidden_imports = [
     'dxcam_cpp',
     'mss',
     'PIL',
-    'pynput',
+    'pydirectinput',
     'keyboard',
     'tomllib',
     'tomlkit'

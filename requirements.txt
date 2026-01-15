@@ -2,7 +2,7 @@ customtkinter
 dxcam_cpp
 mss
 keyboard
-pynput
+pydirectinput
 winrt-runtime
 winrt-Windows.Graphics.Imaging
 winrt-Windows.Media.Ocr
