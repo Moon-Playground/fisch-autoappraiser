@@ -8,13 +8,6 @@ class Actions:
             # move mouse up slightly
             pydirectinput.moveTo(anchor_pos[0], anchor_pos[1] - 200)
             time.sleep(0.5)
-            pydirectinput.moveTo(anchor_pos[0] - 200, anchor_pos[1] - 200)
-            time.sleep(0.3)
-            # Wiggle cursor to force game game update
-            pydirectinput.move(2, 2)
-            time.sleep(0.05)
-            pydirectinput.move(-2, -2)
-            time.sleep(0.3)
             kb.press_and_release(str(self.totem_slot)) # Ensure string for keyboard
             time.sleep(0.3)
             pydirectinput.click()

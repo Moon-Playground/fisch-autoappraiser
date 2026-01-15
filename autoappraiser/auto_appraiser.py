@@ -278,12 +278,11 @@ class AutoAppraiser(Utils):
 
         # -- Totem Tab (Dynamic) --
         # Initial check
-        if self.use_gp:
-            self._create_totem_tab()
+        self._create_totem_tab()
 
     def _create_totem_tab(self):
         try:
-            self.totem_tab = self.tab_view.add("Totem (WIP)")
+            self.totem_tab = self.tab_view.add("Totem")
         except ValueError:
             return # Already exists
 
@@ -295,33 +294,23 @@ class AutoAppraiser(Utils):
         # Auto Totem
         ctk.CTkLabel(self.totem_frame, text="Auto Totem:").grid(row=2, column=0, padx=15, pady=15, sticky="w")
         self.auto_totem_var = ctk.BooleanVar(value=self.auto_totem)
-        ctk.CTkSwitch(self.totem_frame, variable=self.auto_totem_var, text="", state="disabled").grid(row=2, column=1, padx=10, pady=15, sticky="ew")
+        ctk.CTkSwitch(self.totem_frame, variable=self.auto_totem_var, text="").grid(row=2, column=1, padx=10, pady=15, sticky="ew")
 
         # Totem Slot
         ctk.CTkLabel(self.totem_frame, text="Totem Slot (1-9): ").grid(row=3, column=0, padx=15, pady=15, sticky="w")
         self.totem_slot_entry = ctk.CTkEntry(self.totem_frame, placeholder_text="8")
         self.totem_slot_entry.insert(0, str(self.totem_slot))
-        self.totem_slot_entry.configure(state="disabled")
         self.totem_slot_entry.grid(row=3, column=1, padx=10, pady=15, sticky="ew")
 
         # Totem Interval
         ctk.CTkLabel(self.totem_frame, text="Totem Interval (Minutes): ").grid(row=4, column=0, padx=15, pady=15, sticky="w")
         self.totem_entry = ctk.CTkEntry(self.totem_frame, placeholder_text="8")
         self.totem_entry.insert(0, str(self.totem_interval))
-        self.totem_entry.configure(state="disabled")
         self.totem_entry.grid(row=4, column=1, padx=10, pady=15, sticky="ew")
 
         # Save Button
-        ctk.CTkButton(self.totem_frame, text="Save Settings", command=self.save_settings, state="disabled").grid(row=5, column=0, columnspan=2, pady=20)
+        ctk.CTkButton(self.totem_frame, text="Save Settings", command=self.save_settings).grid(row=5, column=0, columnspan=2, pady=20)
 
-    def _toggle_totem_tab(self):
-        if self.use_gp_var.get():
-            self._create_totem_tab()
-        else:
-            try:
-                self.tab_view.delete("Totem (WIP)")
-            except:
-                pass
 
     async def read_frame(self, frame):
         return await self.recognize_frame(self.ocr_engine, frame)
@@ -330,6 +319,12 @@ class AutoAppraiser(Utils):
         while True:
             self.active.wait()
             try:
+                if self.mouse_position is None:
+                    self.mouse_position = pydirectinput.position()
+
+                if self.auto_totem:
+                    self.do_totem(self.mouse_position)
+
                 if self.use_gp: # TODO: implement gp appraise
                     #self.appraise_gp()
                     self.active.clear()

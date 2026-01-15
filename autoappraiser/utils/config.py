@@ -51,15 +51,12 @@ class Config:
         try:
             self.loop_interval = int(self.loop_entry.get())
             self.fish_slot = int(self.slot_entry.get())
-            if self.use_gp != self.use_gp_var.get():
-                self._toggle_totem_tab()
+
             self.use_gp = self.use_gp_var.get()
             
-            if self.use_gp:
-                self.auto_totem = self.auto_totem_var.get()
-            
-            self.totem_slot = int(self.totem_slot_entry.get()) if self.use_gp else self.totem_slot
-            self.totem_interval = int(self.totem_entry.get()) if self.use_gp else self.totem_interval
+            self.auto_totem = self.auto_totem_var.get()
+            self.totem_slot = int(self.totem_slot_entry.get())
+            self.totem_interval = int(self.totem_entry.get())
             if self.capture_mode != self.capture_mode_var.get():
                 self.switch_camera()
             self.capture_mode = self.capture_mode_var.get()
