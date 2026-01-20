@@ -43,7 +43,7 @@ class Mutations:
         # Fill textbox
         text_content = "\n".join(self.lists)
         textbox.insert("0.0", text_content)
-        
+
         btn_frame = ctk.CTkFrame(top, fg_color="transparent")
         btn_frame.pack(fill="x", pady=10)
         
@@ -56,7 +56,7 @@ class Mutations:
         
         # Update lists
         self.lists = new_lists
-        
+
         # Save config
         self.save_config()
         

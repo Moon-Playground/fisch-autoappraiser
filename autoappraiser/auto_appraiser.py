@@ -340,12 +340,16 @@ class AutoAppraiser(Utils):
                     # Async call
                     result = asyncio.run(self.read_frame(frame))
 
+                    # Workaround for "Today/Tonight have boosted chance to get Mutated fish" messages
+                    mutations = self.list.copy()
+                    mutations.append("Mutated")
+
                     # Process result with rapidfuzz
-                    result = process.extractOne(result, self.lists)
+                    result = process.extractOne(result, mutations)
                     result = result[0]
                     if not result:
                         continue
-                    
+
                     found_match = False
                     selected_lists = [desc for desc, var in self.checkbox_vars.items() if var.get()]
                     if result in selected_lists:
