@@ -7,8 +7,8 @@ class Config:
     DEFAULT_CONFIG = {
         'appraise': {
             'loop_interval': 2000,
-            'fish_slot': 9,
             'auto_totem': False,
+            'fish_slot': 9,
             'totem_slot': 8,
             'totem_interval': 2
         },
@@ -50,11 +50,11 @@ class Config:
     def save_settings(self, filepath="config.toml"):
         try:
             self.loop_interval = int(self.loop_entry.get())
-            self.fish_slot = int(self.slot_entry.get())
 
             self.use_gp = self.use_gp_var.get()
             
             self.auto_totem = self.auto_totem_var.get()
+            self.fish_slot = int(self.slot_entry.get())
             self.totem_slot = int(self.totem_slot_entry.get())
             self.totem_interval = int(self.totem_entry.get())
             if self.capture_mode != self.capture_mode_var.get():
@@ -87,8 +87,8 @@ class Config:
             },
             'appraise': {
                 'loop_interval': self.loop_interval,
-                'fish_slot': self.fish_slot,
                 'auto_totem': self.auto_totem,
+                'fish_slot': self.fish_slot,
                 'totem_slot': self.totem_slot,
                 'totem_interval': self.totem_interval
             },

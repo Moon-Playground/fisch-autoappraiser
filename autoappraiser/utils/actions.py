@@ -15,14 +15,14 @@ class Actions:
             time.sleep(1)
             pydirectinput.moveTo(anchor_pos[0], anchor_pos[1])
             time.sleep(1)
+            kb.press_and_release(str(self.fish_slot)) # Ensure string for keyboard
+            time.sleep(0.5)
 
     def appraise_normal(self):
         if self.mouse_position is None:
             self.mouse_position = pydirectinput.position()
 
         anchor_pos = self.mouse_position
-        kb.press_and_release(str(self.fish_slot)) # Ensure string for keyboard
-        time.sleep(0.5)
         pydirectinput.moveTo(anchor_pos[0], anchor_pos[1])
         pydirectinput.click()
         time.sleep(0.2)

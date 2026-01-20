@@ -9,7 +9,11 @@ AutoAppraiser automates the tedious process of appraising fish in **Fisch (Roblo
 1.  **Open AutoAppraiser**: Launch the application.
 2.  **Select Mutations**: Navigate to the **Mutations** tab and check the ones you want to keep (e.g., *Abyssal*, *Celestial*, *Mythical*). 
     *   *The automation will stop as soon as any selected mutation is detected.*
-3.  **Configure Fish Slot**: Go to the **Settings** tab and set the **Fish Slot** (1-9) to match your in-game hotbar position for the fish. Click **Save Settings**.
+3.  **Configure Slots & Totem (Optional)**: Go to the **Auto Totem** tab. 
+    *   Set the **Fish Slot** (1-9) to match your in-game hotbar position.
+    *   Set the **Totem Slot** (1-9) to match your in-game hotbar position.
+    *   Enable **Auto Totem** and set the **Interval** in minutes. 
+    *   Click **Save Settings**.
 
 ---
 
@@ -30,7 +34,7 @@ Defining a precise capture area is the most important step for high accuracy.
 
 ## 🚀 3. Starting the Automation
 
-1.  **Equip Requirements**: Ensure you have enough currency for appraisals and the fish is in the correct hotbar slot.
+1.  **Equip Requirements**: Ensure you have enough currency for appraisals and make sure you are holding the fish.
 2.  **Mouse Placement**: Move your mouse cursor over the **Appraise** button in the in-game dialog.
 3.  **Start Loop**: Press `F4`.
     *   The Status will change to **Active** (Green).

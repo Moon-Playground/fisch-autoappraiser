@@ -95,8 +95,8 @@ class AutoAppraiser(Utils):
         self.gp_confirm_box.capture_x = config['gp']['confirm_x']
         self.gp_confirm_box.capture_y = config['gp']['confirm_y']
         self.loop_interval = config['appraise']['loop_interval']
-        self.fish_slot = config['appraise']['fish_slot']
         self.auto_totem = config['appraise']['auto_totem']
+        self.fish_slot = config['appraise']['fish_slot']
         self.totem_slot = config['appraise']['totem_slot']
         self.totem_interval = config['appraise']['totem_interval']
         self.last_totem = None
@@ -236,22 +236,16 @@ class AutoAppraiser(Utils):
         self.loop_entry.insert(0, str(self.loop_interval))
         self.loop_entry.grid(row=1, column=1, padx=10, pady=15, sticky="ew")
 
-        # Fish Slot
-        ctk.CTkLabel(self.controls_frame, text="Fish Slot (1-9):").grid(row=2, column=0, padx=15, pady=15, sticky="w")
-        self.slot_entry = ctk.CTkEntry(self.controls_frame, placeholder_text="9")
-        self.slot_entry.insert(0, str(self.fish_slot))
-        self.slot_entry.grid(row=2, column=1, padx=10, pady=15, sticky="ew")
-
         # Gamepass
-        ctk.CTkLabel(self.controls_frame, text="Use Gamepass").grid(row=3, column=0, padx=15, pady=15, sticky="w")
+        ctk.CTkLabel(self.controls_frame, text="Use Gamepass").grid(row=2, column=0, padx=15, pady=15, sticky="w")
         self.use_gp_var = ctk.BooleanVar(value=self.use_gp)
         #gp_switch = ctk.CTkSwitch(self.controls_frame, variable=self.use_gp_var, text="")
         #gp_switch.configure(state="disabled")
-        #gp_switch.grid(row=3, column=1, padx=10, pady=15, sticky="ew")
-        ctk.CTkLabel(self.controls_frame, text="Gamepass not supported yet").grid(row=3, column=1, padx=10, pady=15, sticky="ew")
+        #gp_switch.grid(row=2, column=1, padx=10, pady=15, sticky="ew")
+        ctk.CTkLabel(self.controls_frame, text="Gamepass not supported yet").grid(row=2, column=1, padx=10, pady=15, sticky="ew")
 
         # Save Button
-        ctk.CTkButton(self.controls_frame, text="Save Settings", command=self.save_settings).grid(row=5, column=0, columnspan=2, pady=20)
+        ctk.CTkButton(self.controls_frame, text="Save Settings", command=self.save_settings).grid(row=3, column=0, columnspan=2, pady=20)
 
         self.controls_frame.grid_columnconfigure(1, weight=1)
 
@@ -282,7 +276,7 @@ class AutoAppraiser(Utils):
 
     def _create_totem_tab(self):
         try:
-            self.totem_tab = self.tab_view.add("Totem")
+            self.totem_tab = self.tab_view.add("Auto Totem")
         except ValueError:
             return # Already exists
 
@@ -292,24 +286,30 @@ class AutoAppraiser(Utils):
         self.totem_frame.grid_columnconfigure(1, weight=1)
         
         # Auto Totem
-        ctk.CTkLabel(self.totem_frame, text="Auto Totem:").grid(row=2, column=0, padx=15, pady=15, sticky="w")
+        ctk.CTkLabel(self.totem_frame, text="Auto Totem:").grid(row=0, column=0, padx=15, pady=15, sticky="w")
         self.auto_totem_var = ctk.BooleanVar(value=self.auto_totem)
-        ctk.CTkSwitch(self.totem_frame, variable=self.auto_totem_var, text="").grid(row=2, column=1, padx=10, pady=15, sticky="ew")
+        ctk.CTkSwitch(self.totem_frame, variable=self.auto_totem_var, text="").grid(row=0, column=1, padx=10, pady=15, sticky="ew")
+
+        # Fish Slot
+        ctk.CTkLabel(self.totem_frame, text="Fish Slot (1-9):").grid(row=1, column=0, padx=15, pady=15, sticky="w")
+        self.slot_entry = ctk.CTkEntry(self.totem_frame, placeholder_text="9")
+        self.slot_entry.insert(0, str(self.fish_slot))
+        self.slot_entry.grid(row=1, column=1, padx=10, pady=15, sticky="ew")
 
         # Totem Slot
-        ctk.CTkLabel(self.totem_frame, text="Totem Slot (1-9): ").grid(row=3, column=0, padx=15, pady=15, sticky="w")
+        ctk.CTkLabel(self.totem_frame, text="Totem Slot (1-9): ").grid(row=2, column=0, padx=15, pady=15, sticky="w")
         self.totem_slot_entry = ctk.CTkEntry(self.totem_frame, placeholder_text="8")
         self.totem_slot_entry.insert(0, str(self.totem_slot))
-        self.totem_slot_entry.grid(row=3, column=1, padx=10, pady=15, sticky="ew")
+        self.totem_slot_entry.grid(row=2, column=1, padx=10, pady=15, sticky="ew")
 
         # Totem Interval
-        ctk.CTkLabel(self.totem_frame, text="Totem Interval (Minutes): ").grid(row=4, column=0, padx=15, pady=15, sticky="w")
+        ctk.CTkLabel(self.totem_frame, text="Totem Interval (Minutes): ").grid(row=3, column=0, padx=15, pady=15, sticky="w")
         self.totem_entry = ctk.CTkEntry(self.totem_frame, placeholder_text="8")
         self.totem_entry.insert(0, str(self.totem_interval))
-        self.totem_entry.grid(row=4, column=1, padx=10, pady=15, sticky="ew")
+        self.totem_entry.grid(row=3, column=1, padx=10, pady=15, sticky="ew")
 
         # Save Button
-        ctk.CTkButton(self.totem_frame, text="Save Settings", command=self.save_settings).grid(row=5, column=0, columnspan=2, pady=20)
+        ctk.CTkButton(self.totem_frame, text="Save Settings", command=self.save_settings).grid(row=4, column=0, columnspan=2, pady=20)
 
 
     async def read_frame(self, frame):
