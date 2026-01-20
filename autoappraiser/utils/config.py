@@ -46,6 +46,11 @@ class Config:
             'capture_y': 517
         }
     }
+    NEW_MUTATIONS = [
+        "Boreal",
+        "Coral",
+        "Mourned"
+    ]
 
     def save_settings(self, filepath="config.toml"):
         try:
@@ -108,11 +113,18 @@ class Config:
     def load_config(self, filepath="config.toml"):
         if os.path.exists(filepath):
             with open(filepath, "rb") as f:
-                return tomllib.load(f)
+                cfg = tomllib.load(f)
+                for mutation in self.NEW_MUTATIONS:
+                    if mutation not in cfg['mutations']['lists']:
+                        cfg['mutations']['lists'].append(mutation)
+                return cfg
         else:
             # Create config file if not exists
             try:
                 with open(filepath, "w") as f:
+                    for mutation in self.NEW_MUTATIONS:
+                        if mutation not in self.DEFAULT_CONFIG['mutations']['lists']:
+                            self.DEFAULT_CONFIG['mutations']['lists'].append(mutation)
                     tomlkit.dump(self.DEFAULT_CONFIG, f)
             except:
                 pass 
