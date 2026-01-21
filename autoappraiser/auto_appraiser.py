@@ -341,7 +341,7 @@ class AutoAppraiser(Utils):
                     result = asyncio.run(self.read_frame(frame))
 
                     # Workaround for "Today/Tonight have boosted chance to get Mutated fish" messages
-                    mutations = self.list.copy()
+                    mutations = self.lists.copy()
                     mutations.append("Mutated")
 
                     # Process result with rapidfuzz
