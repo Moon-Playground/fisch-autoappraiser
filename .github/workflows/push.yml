@@ -8,10 +8,75 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.13'
+      - name: Set up Custom Python (Cinder)
+        shell: pwsh
+        run: |
+          $url = "https://github.com/Moon-Playground/Python-builder/releases/download/cinder-v3.14.2-04f91c3-win/cinder-v3.14.2-04f91c3-windows-x86_64.zip"
+          Write-Host "Downloading custom Python from $url..."
+          Invoke-WebRequest -Uri $url -OutFile "python_bin.zip"
+          
+          Write-Host "Extracting Zip..."
+          Expand-Archive -Path "python_bin.zip" -DestinationPath "$env:USERPROFILE\python_tmp"
+          
+          Write-Host "Contents of python_tmp:"
+          Get-ChildItem -Path "$env:USERPROFILE\python_tmp" -Recurse | Select-Object FullName
+          
+          # Specifically look for the python installer, excluding test binaries
+          $installer = Get-ChildItem -Path "$env:USERPROFILE\python_tmp" -Filter "python-*.exe" -Recurse | Select-Object -First 1
+          if (-not $installer) { 
+              Write-Host "Could not find python-*.exe, searching for any exe that isn't _testembed..."
+              $installer = Get-ChildItem -Path "$env:USERPROFILE\python_tmp" -Filter "*.exe" -Recurse | Where-Object { $_.Name -notlike "_testembed*" } | Select-Object -First 1
+          }
+          
+          if (-not $installer) { throw "Python installer not found in zip" }
+          
+          $installDir = "$env:USERPROFILE\python_custom"
+          Write-Host "Running installer: $($installer.FullName) to $installDir"
+          # Standard Python installer flags: /quiet (no UI), InstallAllUsers=0 (local), TargetDir (destination)
+          Start-Process -FilePath $installer.FullName -ArgumentList "/quiet", "InstallAllUsers=0", "Include_launcher=0", "Include_test=0", "SimpleInstall=1", "TargetDir=$installDir" -Wait
+          
+          if (-not (Test-Path "$installDir\python.exe")) {
+              Write-Host "Normal installation failed or target directory structure is different. Searching for python.exe..."
+              $pythonExe = Get-ChildItem -Path $installDir -Filter "python.exe" -Recurse | Select-Object -First 1
+              if ($pythonExe) { 
+                  $pythonDir = $pythonExe.Directory.FullName 
+                  Write-Host "Found python.exe at $pythonDir"
+              }
+              else { 
+                  Write-Host "Checking python_tmp again in case it installed there..."
+                  $pythonExe = Get-ChildItem -Path "$env:USERPROFILE\python_tmp" -Filter "python.exe" -Recurse | Select-Object -First 1
+                  if ($pythonExe) { $pythonDir = $pythonExe.Directory.FullName }
+                  else { throw "python.exe not found after installation" }
+              }
+          } else {
+              $pythonDir = $installDir
+          }
+          
+          Write-Host "Setting up PATH for Python at $pythonDir"
+          "$pythonDir" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          "$pythonDir\Scripts" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          
+          Write-Host "Setting up PYTHONHOME and PYTHONPATH..."
+          echo "PYTHONHOME=$pythonDir" >> $env:GITHUB_ENV
+          echo "PYTHONPATH=$pythonDir\Lib;$pythonDir\Lib\site-packages" >> $env:GITHUB_ENV
+          
+          Remove-Item "python_bin.zip"
+          Remove-Item -Recurse -Force "$env:USERPROFILE\python_tmp"
+
+      - name: Debug Environment
+        run: |
+          Write-Host "Current Path:"
+          $env:PATH -split ";"
+          Write-Host "PYTHONHOME: $env:PYTHONHOME"
+          Write-Host "PYTHONPATH: $env:PYTHONPATH"
+          Write-Host "Listing Python Directory:"
+          ls $env:PYTHONHOME
+        shell: pwsh
+
+      - name: Verify Python version
+        run: |
+          python --version
+          python -c "import sys; print(f'Executable: {sys.executable}'); print(f'Prefix: {sys.prefix}'); print(f'Path: {sys.path}')"
 
       - name: Install dependencies
         run: |
